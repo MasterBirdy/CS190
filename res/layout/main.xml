@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/Start"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="20dp"
+        android:text="Start" />
+
+    <Button
+        android:id="@+id/Rank"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Rank" />
+
+    <Button
+        android:id="@+id/Option"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Option" />
+
+    <Button
+        android:id="@+id/About"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="About" />
+
+</LinearLayout>
