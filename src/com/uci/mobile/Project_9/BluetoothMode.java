@@ -143,12 +143,12 @@ public class BluetoothMode extends Activity {
 				if(mConnectedThread != null)
 				{
 					if(game.getUserAmo() > 0) {
-		
-							userMove = Game.ATTACK;
-							mConnectedThread.write(new String("1 " + userMove).getBytes());
-							youMoved = true;
-							if (opponentMoved == true)
-								determineRound();
+
+						userMove = Game.ATTACK;
+						mConnectedThread.write(new String("1 " + userMove).getBytes());
+						youMoved = true;
+						if (opponentMoved == true)
+							determineRound();
 					}
 				}
 				// 	mConnectedThread.write(new String("sheep").getBytes());
@@ -168,11 +168,11 @@ public class BluetoothMode extends Activity {
 		}
 
 	}
-	
+
 	private void determineRound()
 	{
 		game.determine(userMove, opponentMove);
-		
+
 	}
 
 	private final Handler mHandler = new Handler() {
