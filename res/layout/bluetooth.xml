@@ -25,7 +25,7 @@
             android:text="Accepting..."
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#33FF00"
-            android:visibility="visible" />
+            android:visibility="invisible" />
 
         <ProgressBar
             android:id="@+id/progressBar1"
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="invisible" />
         
         <Button
             android:id="@+id/button2"
@@ -42,13 +42,26 @@
             android:text="Connect" 
              android:layout_weight=".5"/>
     </LinearLayout>
-
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"  >
      <TextView
         android:id="@+id/lifeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lives: 2"
+        android:layout_marginRight="80dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+          <TextView
+        android:id="@+id/ammoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ammo: 0"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+     </LinearLayout>
     <TextView
         android:id="@+id/enemyText"
         android:layout_width="wrap_content"
@@ -61,10 +74,19 @@
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1.02"
         android:src="@drawable/questionmark" />
-
+    <TextView
+        android:id="@+id/playerWinsText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Player 0 wins!"
+        android:gravity="center"
+        android:textColor="#3366FF"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

@@ -46,6 +46,9 @@ public class BluetoothMode extends Activity {
 	private ConnectThread mConnectThread;
 	private ConnectedThread mConnectedThread;
 	private TextView enemyText;
+	private TextView ammoText;
+	private TextView lifeText;
+	private TextView playerWinsText;
 	public static String mDeviceAdd = null;
 	private String name;
 	private String character;
@@ -55,6 +58,7 @@ public class BluetoothMode extends Activity {
 	private int opponentMove;
 	private boolean youMoved;
 	private boolean opponentMoved;
+	private boolean gameWon;
 	BluetoothDevice mDevice = null;
 
 	// Constants that indicate the current connection state
@@ -81,10 +85,15 @@ public class BluetoothMode extends Activity {
 		attackButton = (Button) findViewById(R.id.attackButton);
 		defendButton = (Button) findViewById(R.id.defendButton);
 		reloadButton = (Button) findViewById(R.id.reloadButton);
+		lifeText = (TextView) findViewById(R.id.lifeText);
+		ammoText = (TextView) findViewById(R.id.ammoText);
 		enemyText = (TextView) findViewById(R.id.enemyText);
+		playerWinsText = (TextView) findViewById(R.id.playerWinsText);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
 		acceptingText = (TextView) findViewById(R.id.acceptingText);
 		imageCharacter = (ImageView) findViewById(R.id.imageView1);
+		gameWon = false;
+		Toast.makeText(getApplicationContext(), "To play, have your friend press accept and find his phone by pressing connect!", Toast.LENGTH_SHORT).show();
 		if(CheckFile(Project_9Activity.USERIDFILE))
 		{
 			try 
@@ -142,19 +151,54 @@ public class BluetoothMode extends Activity {
 			{
 				if(mConnectedThread != null)
 				{
-					if(game.getUserAmo() > 0) {
+					if (!gameWon)
+					{
+						if(game.getUserAmo() > 0) {
 
-						userMove = Game.ATTACK;
+							userMove = Game.ATTACK;
+							mConnectedThread.write(new String("1 " + userMove).getBytes());
+							youMoved = true;
+							if (opponentMoved == true)
+								determineRound();
+						}
+					}
+				}
+			}
+		});
+
+		reloadButton.setOnClickListener(new OnClickListener(){
+			public void onClick(View arg0)
+			{
+				if(mConnectedThread != null)
+				{
+					if (!gameWon)
+					{
+						userMove = Game.RELOAD;
 						mConnectedThread.write(new String("1 " + userMove).getBytes());
 						youMoved = true;
 						if (opponentMoved == true)
 							determineRound();
 					}
 				}
-				// 	mConnectedThread.write(new String("sheep").getBytes());
 			}
 		});
 
+		defendButton.setOnClickListener(new OnClickListener(){
+			public void onClick(View arg0)
+			{
+				if(mConnectedThread != null)
+				{
+					if (!gameWon)
+					{
+						userMove = Game.DEFEND;
+						mConnectedThread.write(new String("1 " + userMove).getBytes());
+						youMoved = true;
+						if (opponentMoved == true)
+							determineRound();
+					}
+				}
+			}
+		});
 		if (mBluetoothAdapter == null) 
 		{
 			Toast.makeText(getApplicationContext(), "Application does not support Bluetooth", Toast.LENGTH_SHORT);
@@ -169,10 +213,32 @@ public class BluetoothMode extends Activity {
 
 	}
 
+	protected void onDestroy(){
+		if (mAcceptThread != null)
+			mAcceptThread.cancel();
+		if (mConnectThread != null)
+			mConnectThread.cancel();
+		if (mConnectedThread != null)
+			mConnectedThread.cancel();
+	}
+
 	private void determineRound()
 	{
 		game.determine(userMove, opponentMove);
-
+		lifeText.setText("Lives: " + game.getUserHealth());
+		ammoText.setText("Ammo: " + game.getUserAmo());
+		youMoved = false;
+		opponentMoved = false;
+		if (game.getBossHealth() <= 0) {
+			gameWon = true;
+			playerWinsText.setText("You win!");
+			playerWinsText.setVisibility(View.VISIBLE);
+		}
+		else if (game.getUserHealth() <= 0){
+			gameWon = true;
+			playerWinsText.setText("You lose!");
+			playerWinsText.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private final Handler mHandler = new Handler() {
@@ -216,7 +282,9 @@ public class BluetoothMode extends Activity {
 				b = msg.getData();
 				opponentMove = Integer.parseInt(b.getString("opponentMove"));
 				opponentMoved = true;
-				if (youMoved == true);
+				if (youMoved == true)
+					determineRound();
+				break;
 				//			case 12:
 				//				b = msg.getData();
 				//				String key = b.getString("numberText");
