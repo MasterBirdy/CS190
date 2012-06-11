@@ -26,7 +26,8 @@
         <activity android:name="SelectGame"></activity>
         <activity android:name="CharacterSelection"></activity>
         <activity android:name="StoryMode"></activity>
-        <activity android:name="BluetoothMode"></activity>
+        <activity android:name="BluetoothMode" 
+            android:screenOrientation="portrait"></activity>
         <activity android:name="OnlineMode"></activity>
         <activity android:name="levelOne"></activity>
         <activity android:name="levelTwo"></activity>

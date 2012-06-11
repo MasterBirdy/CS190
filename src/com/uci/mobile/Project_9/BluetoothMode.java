@@ -40,6 +40,7 @@ public class BluetoothMode extends Activity {
 	Button reloadButton;
 	Button defendButton;
 	ProgressBar progressBar;
+	ProgressBar progressBar2;
 	TextView acceptingText;
 	private int mState;
 	private AcceptThread mAcceptThread;
@@ -49,6 +50,7 @@ public class BluetoothMode extends Activity {
 	private TextView ammoText;
 	private TextView lifeText;
 	private TextView playerWinsText;
+	private TextView waitingText;
 	public static String mDeviceAdd = null;
 	private String name;
 	private String character;
@@ -88,8 +90,10 @@ public class BluetoothMode extends Activity {
 		lifeText = (TextView) findViewById(R.id.lifeText);
 		ammoText = (TextView) findViewById(R.id.ammoText);
 		enemyText = (TextView) findViewById(R.id.enemyText);
+		waitingText = (TextView) findViewById(R.id.waitingText);
 		playerWinsText = (TextView) findViewById(R.id.playerWinsText);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+		progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
 		acceptingText = (TextView) findViewById(R.id.acceptingText);
 		imageCharacter = (ImageView) findViewById(R.id.imageView1);
 		gameWon = false;
@@ -160,6 +164,11 @@ public class BluetoothMode extends Activity {
 							youMoved = true;
 							if (opponentMoved == true)
 								determineRound();
+							else
+							{
+								waitingText.setVisibility(View.VISIBLE);
+								progressBar2.setVisibility(View.VISIBLE);
+							}
 						}
 					}
 				}
@@ -178,6 +187,11 @@ public class BluetoothMode extends Activity {
 						youMoved = true;
 						if (opponentMoved == true)
 							determineRound();
+						else
+						{
+							waitingText.setVisibility(View.VISIBLE);
+							progressBar2.setVisibility(View.VISIBLE);
+						}
 					}
 				}
 			}
@@ -195,6 +209,11 @@ public class BluetoothMode extends Activity {
 						youMoved = true;
 						if (opponentMoved == true)
 							determineRound();
+						else
+						{
+							waitingText.setVisibility(View.VISIBLE);
+							progressBar2.setVisibility(View.VISIBLE);
+						}
 					}
 				}
 			}
@@ -220,10 +239,13 @@ public class BluetoothMode extends Activity {
 			mConnectThread.cancel();
 		if (mConnectedThread != null)
 			mConnectedThread.cancel();
+		super.onDestroy();
 	}
 
 	private void determineRound()
 	{
+		waitingText.setVisibility(View.INVISIBLE);
+		progressBar2.setVisibility(View.INVISIBLE);
 		game.determine(userMove, opponentMove);
 		lifeText.setText("Lives: " + game.getUserHealth());
 		ammoText.setText("Ammo: " + game.getUserAmo());

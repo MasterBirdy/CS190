@@ -62,14 +62,38 @@
         android:text="Ammo: 0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
      </LinearLayout>
+         <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1" >
     <TextView
         android:id="@+id/enemyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Enemy: Unknown"
         android:textColor="#F75D59"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginRight="15dp" />
+     <TextView
+            android:id="@+id/waitingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting..."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#C11B17"
+            android:visibility="visible" 
+            android:gravity="center"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:gravity="center" /></LinearLayout>
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
